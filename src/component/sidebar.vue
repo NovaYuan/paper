@@ -5,7 +5,7 @@
         <header>
             <nav>
                 <ul>
-                    <li><input></li>
+                    <li><input type="text"/></li>
                 </ul>
             </nav>
         </header>
@@ -15,10 +15,3 @@
 <script>
     export default {}
 </script>
-
-<style rel="stylesheet/sass" lang="sass">
-    .side-part
-        height: 100%
-        width: 30%
-        border: 1px solid #ddd
-</style>

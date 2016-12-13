@@ -37,8 +37,8 @@ module.exports = {
                 loader: 'vue'
             },
             {
-                test: /\.(scss|sass)$/,
-                loader: 'style!css!sass?sourceMap'
+                test: /\.sass$/,
+                loader: 'style!css!sass'
             }
         ]
     },
