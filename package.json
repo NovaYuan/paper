@@ -1,0 +1,43 @@
+{
+  "name": "paper",
+  "version": "1.0.0",
+  "description": "things,people",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NovaYuan/paper.git"
+  },
+  "author": "Choojen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NovaYuan/paper/issues"
+  },
+  "homepage": "https://github.com/NovaYuan/paper#readme",
+  "devDependencies": {
+    "babel-core": "^6.20.0",
+    "babel-loader": "^6.2.9",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "babel-runtime": "^6.20.0",
+    "css-loader": "^0.26.1",
+    "express": "^4.14.0",
+    "node-sass": "^3.13.1",
+    "path": "^0.12.7",
+    "sass-loader": "^4.0.2",
+    "style-loader": "^0.13.1",
+    "url": "^0.11.0",
+    "vue-loader": "^10.0.2",
+    "vue-template-compiler": "^2.1.5",
+    "webpack": "^1.14.0",
+    "webpack-dev-middleware": "^1.8.4",
+    "webpack-hot-middleware": "^2.13.2"
+  },
+  "dependencies": {
+    "vue": "^2.1.5"
+  }
+}
