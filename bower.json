@@ -1,0 +1,20 @@
+{
+  "name": "paper",
+  "description": "things,people",
+  "main": "index.js",
+  "authors": [
+    "Choojen"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/NovaYuan/paper",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "^4.7.0"
+  }
+}

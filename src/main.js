@@ -3,10 +3,10 @@
  */
 'use strict';
 import Vue from 'vue'
-import Test from './test/test.vue' //测试用例
+import Stage from './component/stage.vue'
 import Sidebar from './component/sidebar.vue'
 
 new Vue({
     el: '#app',
-    components: { Test, Sidebar }
+    components: {Stage, Sidebar}
 });
