@@ -20,10 +20,13 @@
             <div class="fun" :class="{'small-modules': isShowDetail}">
                 <a v-for="item in modules"
                    :style="{backgroundColor: item.bgColor}"
-                   v-on:click="getModuleDetail(item.enName)">
+                   v-on:click="getModuleDetail(item)">
                     {{item.name}}
                 </a>
             </div>
+            <h4 v-if="detailItem"
+                :style="{color: detailItem.bgColor}">{{detailItem.name}}</h4>
+
             <div class="modules-detail" v-if="isShowDetail">
                 <label></label>
             </div>
@@ -52,12 +55,20 @@
                 isAuth: true,
                 profileUrl: false,
                 modules: Config.modules,
-                isShowDetail: false
+                isShowDetail: false,
+                detailItem: ""
             }
         },
         methods: {
-            getModuleDetail: function(key){
-                this.isShowDetail = true
+            getModuleDetail: function(item){
+                this.isShowDetail = !this.isShowDetail;
+                this.detailItem = "";
+
+                setTimeout(function(){
+                    if(this.isShowDetail){
+                        this.detailItem = item;
+                    }
+                }.bind(this), 300);
             }
         }
     }
@@ -91,18 +102,54 @@
         width: 24rem
         margin: $headerH auto
 
+        h4
+            display: inline-block
+            font: bold 2.1rem/50px "Microsoft YaHei"
+            color: #999
+            margin-left: 10px
+            @include transition(display 1s, font-size 1s)
+
+            &:after
+                content: "—————"
+                font-weight: normal
+                font-size: 20px
+                margin-left: 5px
+
+            &:before
+                content: "—"
+                font-weight: normal
+                font-size: 20px
+                margin-right: 5px
+
         .fun
             height: 100%
+            width: 100%
+            font-size: 0
+            @include transform(0deg)
+            @include transition(width .5s, height .5s)
+
             a
                 display: inline-block
                 width: 50%
                 height: 50%
+                font: bold 2rem/12rem "Microsoft YaHei"
+                text-align: center
+                color: #fff
+                transition: font .5s, color .5s, transform 1s
                 &:hover
                     cursor: pointer
 
-        .small-modules
+        .fun.small-modules
             height: 50px
+            width: 50px
+            font-size: 0
+            display: inline-block
+            float: left
+            @include transform(360deg)
 
+            a
+                color: rgba(255, 255, 255, 0)
+                font: bold 0rem/0rem "Microsoft YaHei"
 
     section
         margin: $headerH 0

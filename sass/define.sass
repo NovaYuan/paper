@@ -1,7 +1,7 @@
 html,body,div,ul,li,small,h1,h2,h3,h4,h5,h6,span,label,button,table,td,tr,th,thead,tbody,tfoot
   margin: 0
   padding: 0
-  font-family: "Lucida Grande", Lucida Sans Unicode, Hiragino Sans GB, "SimHei", Verdana, Aril, sans-serif
+  font-family: "Lucida Grande", "Microsoft YaHei", Verdana, Aril, sans-serif
   font-size: 10px
 
 $commonGap: 15px
@@ -31,6 +31,13 @@ ul
   -ms-transition: $style1, $style2
   -moz-transition: $style1, $style2
   -o-transition: $style1, $style2
+
+@mixin transform($deg)
+  transform: rotate($deg)
+  -ms-transform: rotate($deg)
+  -moz-transform: rotate($deg)
+  -webkit-transform: rotate($deg)
+  -o-transform: rotate($deg)
 
 .flex
   @include flex
