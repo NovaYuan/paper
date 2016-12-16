@@ -13,7 +13,7 @@
             </div>
             <span class="flex-1" v-if="isAuth">
                 <i class="fa fa-bell"></i>
-                <i>13</i>
+                <i class="fa fa-plus"></i>
             </span>
         </header>
         <div class="modules">
@@ -24,11 +24,19 @@
                     {{item.name}}
                 </a>
             </div>
-            <h4 v-if="detailItem"
-                :style="{color: detailItem.bgColor}">{{detailItem.name}}</h4>
+            <h4 v-if="detailTitle"
+                :style="{color: detailTitle.bgColor}">{{detailTitle.name}}</h4>
 
-            <div class="modules-detail" v-if="isShowDetail">
-                <label></label>
+            <div class="modules-detail" v-show="isShowDetail">
+                <ul>
+                   <li v-for="item in detailList.content">
+                       <a :href="'/' + item.id" :id="item.id">{{item.title}}</a>
+                       <span class="float-right">{{item.createDate}}</span>
+                   </li>
+                </ul>
+                <div class="tag-wrapper">
+                    <label class="label" v-for="tag in detailList.tags">{{tag}}</label>
+                </div>
             </div>
         </div>
         <section class="flex">
@@ -43,6 +51,7 @@
                 <p>Email：qiujuan.yuan@163.com</p>
             </div>
         </section>
+        <p class="desc">好学而不贰。<br/>儿童急走追黄蝶，飞入菜花无处寻。</p>
     </div>
 </template>
 
@@ -56,17 +65,20 @@
                 profileUrl: false,
                 modules: Config.modules,
                 isShowDetail: false,
-                detailItem: ""
+                detailTitle: "",
+                detailList: {}
             }
         },
         methods: {
             getModuleDetail: function(item){
                 this.isShowDetail = !this.isShowDetail;
-                this.detailItem = "";
+                this.detailTitle = "";
+                this.detailList = {};
 
                 setTimeout(function(){
                     if(this.isShowDetail){
-                        this.detailItem = item;
+                        this.detailTitle = item;
+                        this.detailList = Config.detailList;
                     }
                 }.bind(this), 300);
             }
@@ -92,22 +104,29 @@
             input
                 width: 260px
 
+            button
+                i
+                    padding: 0!important
+
         span
             i.fa
                 font-size: 1.6rem
                 color: #e9967a
+                padding: 10px
 
     .modules
         height: 24rem
         width: 24rem
-        margin: $headerH auto
+        margin: $headerH auto 0
+        padding-bottom: $headerH
+        border-bottom: 1px solid #ddd
 
         h4
             display: inline-block
             font: bold 2.1rem/50px "Microsoft YaHei"
             color: #999
             margin-left: 10px
-            @include transition(display 1s, font-size 1s)
+            @include transition((display 1s, font-size 1s))
 
             &:after
                 content: "—————"
@@ -126,7 +145,7 @@
             width: 100%
             font-size: 0
             @include transform(0deg)
-            @include transition(width .5s, height .5s)
+            @include transition((width .5s, height .5s))
 
             a
                 display: inline-block
@@ -151,21 +170,57 @@
                 color: rgba(255, 255, 255, 0)
                 font: bold 0rem/0rem "Microsoft YaHei"
 
+        .modules-detail
+            padding: $commonGap 0
+            line-height: 22px
+            @include transition((display .5s))
+
+            ul
+                li
+                    color: cadetblue
+                    a
+                        line-height: 24px
+                        font-size: 1.4rem
+                        text-decoration: none
+                        color: cadetblue
+
+                        &:hover
+                            text-decoration: underline
+
+            .tag-wrapper
+                padding: $smallGap 0 $bigGap
+                .label
+                    display: inline-block
+                    padding: $smallGap
+                    line-height: 0
+                    border: 1px solid orange
+                    margin-right: $commonGap
+
+
     section
-        margin: $headerH 0
+        margin: $commonGap 0
         .profile
-            width: 80px
-            height: 80px
+            width: 5.5rem
+            height: 5.5rem
             border-radius: 50%
             background-color: #FF8C00
             text-align: center
-            line-height: 80px
-            margin-right: $commonGap
+            line-height: 5.5rem
+            margin-right: $smallGap
             i
-                font-size: 5rem
+                font-size: 3rem
                 color: #fff
                 vertical-align: middle
 
         .contact
             font-size: 1.4rem
+            p
+                margin: .5rem
+                color: cadetblue
+
+    .desc
+        text-align: center
+        line-height: 22px
+        font-size: 1.3rem
+        color: #b8b6b6
 </style>

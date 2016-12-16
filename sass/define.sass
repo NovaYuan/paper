@@ -25,12 +25,12 @@ ul
   -moz-box-shadow: $style
   -o-box-shadow: $style
 
-@mixin transition($style1, $style2)
-  transition: $style1, $style2
-  -webkit-transition: $style1, $style2
-  -ms-transition: $style1, $style2
-  -moz-transition: $style1, $style2
-  -o-transition: $style1, $style2
+@mixin transition($style)
+  transition: $style
+  -webkit-transition: $style
+  -ms-transition: $style
+  -moz-transition: $style
+  -o-transition: $style
 
 @mixin transform($deg)
   transform: rotate($deg)
@@ -73,6 +73,9 @@ ul
 .cadetblue
   color: #5f9ea0!important
 
+.float-right
+  float: right
+
 input
   border-radius: 5px
   border: 1px solid #ddd
@@ -80,7 +83,7 @@ input
   height: $inputH
   outline: none
   padding: 5px 8px
-  @include transition(border-color ease-in-out .25s, box-shadow ease-in-out .25s)
+  @include transition((border-color ease-in-out .25s, box-shadow ease-in-out .25s))
 
   &:focus
     border: 1px solid green
@@ -98,8 +101,8 @@ input
     right: 2px
 
     button
-      height: 26px
-      width: 26px
+      height: 24px
+      width: 24px
       background: #fff
       border: none
       outline: none

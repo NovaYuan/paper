@@ -24,5 +24,30 @@ var Config = {
             enName: "mine",
             bgColor: "#e9967a"
         }
-    ]
+    ],
+    detailList:{
+        content: [
+            {
+                id: 1,
+                title: "神仙道的省钱之道",
+                createDate: "2016-12-16"
+            },
+            {
+                id: 2,
+                title: "五子棋之战",
+                createDate: "2016-12-16"
+            },
+            {
+                id: 3,
+                title: "拼图游戏",
+                createDate: "2016-12-16"
+            },
+            {
+                id: 4,
+                title: "拼图游戏",
+                createDate: "2016-12-16"
+            }
+        ],
+        tags: ["游戏", "神仙道", "拼图", "游戏", "省钱"]
+    }
 };
