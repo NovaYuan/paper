@@ -32,12 +32,42 @@ ul
   -moz-transition: $style
   -o-transition: $style
 
-@mixin transform($deg)
-  transform: rotate($deg)
-  -ms-transform: rotate($deg)
-  -moz-transform: rotate($deg)
-  -webkit-transform: rotate($deg)
-  -o-transform: rotate($deg)
+@mixin transform($trans)
+  transform: $trans
+  -ms-transform: $trans
+  -moz-transform: $trans
+  -webkit-transform: $trans
+  -o-transform: $trans
+
+@mixin clipPath($params)
+  -webkit-clip-path: $params
+  -o-clip-path: $params
+  -moz-clip-path: $params
+  -ms-clip-path: $params
+  clip-path: $params
+
+@mixin keyframe($name)
+  @keyframes #{$name}
+    @content
+  @-moz-keyframes #{$name}
+    @content
+  @-o-keyframes #{$name}
+    @content
+  @-webkit-keyframes #{$name}
+    @content
+
+@mixin animation($prop)
+  animation: $prop
+  -moz-animation: $prop
+  -webkit-animation: $prop
+  -o-animation: $prop
+
+@mixin transformOrigin($prop)
+  transform-origin: $prop
+  -moz-transform-origin: $prop
+  -webkit-transform-origin: $prop
+  -o-transform-origin: $prop
+
 
 .flex
   @include flex

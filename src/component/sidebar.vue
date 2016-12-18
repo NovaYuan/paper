@@ -1,5 +1,4 @@
 <!--created by Choojen on 2016/12/13.-->
-
 <template lang="html">
     <div class="flex-1 side">
         <header class="flex">
@@ -35,7 +34,9 @@
                    </li>
                 </ul>
                 <div class="tag-wrapper">
-                    <label class="label" v-for="tag in detailList.tags">{{tag}}</label>
+                    <label class="label"
+                           :style="{backgroundColor: curColor}"
+                           v-for="tag in detailList.tags">{{tag}}</label>
                 </div>
             </div>
         </div>
@@ -66,7 +67,8 @@
                 modules: Config.modules,
                 isShowDetail: false,
                 detailTitle: "",
-                detailList: {}
+                detailList: {},
+                curColor: ""
             }
         },
         methods: {
@@ -74,6 +76,7 @@
                 this.isShowDetail = !this.isShowDetail;
                 this.detailTitle = "";
                 this.detailList = {};
+                this.curColor = item.bgColor;
 
                 setTimeout(function(){
                     if(this.isShowDetail){
@@ -119,7 +122,6 @@
         width: 24rem
         margin: $headerH auto 0
         padding-bottom: $headerH
-        border-bottom: 1px solid #ddd
 
         h4
             display: inline-block
@@ -183,19 +185,48 @@
                         font-size: 1.4rem
                         text-decoration: none
                         color: cadetblue
-
                         &:hover
                             text-decoration: underline
 
             .tag-wrapper
-                padding: $smallGap 0 $bigGap
+                margin: 80px 0 0
+                border-top: 1px solid #cce0e1
                 .label
                     display: inline-block
-                    padding: $smallGap
-                    line-height: 0
-                    border: 1px solid orange
-                    margin-right: $commonGap
+                    padding: 12px 6px
+                    line-height: 1.4rem
+                    margin: 0 $commonGap $commonGap $commonGap
+                    font-size: .5rem
+                    color: white
+                    width: 1rem
+                    word-wrap: break-word
+                    height: auto
+                    vertical-align: top
+                    margin-top: -7px
+                    position: relative
+                    cursor: pointer
+                    @include clipPath(polygon(0% 25%, 50% 0%, 100% 25%, 100% 100%, 0% 100%))
+                    @include animation((swing 3s infinite))
+                    @include transformOrigin((50% 1%))
+                    @include keyframe(swing)
+                        0%
+                            @include transform(rotate(-20deg))
+                        50%
+                            @include transform(rotate(20deg))
+                        100%
+                            @include transform(rotate(-20deg))
+                    &:hover
+                        animation-fill-mode: forwards
+                        animation-play-state: paused
 
+
+
+                    &:before
+                        content: "。"
+                        position: absolute
+                        top: -6px
+                        left: 39%
+                        color: #dbdfce
 
     section
         margin: $commonGap 0
