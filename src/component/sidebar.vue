@@ -115,7 +115,7 @@
             i.fa
                 font-size: 1.6rem
                 color: #e9967a
-                padding: 10px
+                padding: 6px
 
     .modules
         height: 24rem
@@ -210,11 +210,11 @@
                     @include transformOrigin((50% 1%))
                     @include keyframe(swing)
                         0%
-                            @include transform(rotate(-20deg))
+                            @include transform(rotate(-15deg))
                         50%
-                            @include transform(rotate(20deg))
+                            @include transform(rotate(15deg))
                         100%
-                            @include transform(rotate(-20deg))
+                            @include transform(rotate(-15deg))
                     &:hover
                         animation-fill-mode: forwards
                         animation-play-state: paused
