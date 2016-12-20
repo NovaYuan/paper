@@ -48,8 +48,8 @@
                 </div>
             </div>
             <div class="contact flex-2">
-                <p>名字：Choojen</p>
-                <p>Email：qiujuan.yuan@163.com</p>
+                <p>Choojen</p>
+                <p>qiujuan.yuan@163.com</p>
             </div>
         </section>
         <p class="desc">好学而不贰。<br/>儿童急走追黄蝶，飞入菜花无处寻。</p>
