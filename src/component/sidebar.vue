@@ -59,12 +59,17 @@
 <script>
     export default {
         name: 'Sidebar',
+        created(){
+            this.$http.get('/types.node').then(function(res) {
+                this.modules = res.data;
+            }.bind(this))
+        },
         data(){
             return {
                 name: "test2",
                 isAuth: true,
                 profileUrl: false,
-                modules: Config.modules,
+                modules: [],
                 isShowDetail: false,
                 detailTitle: "",
                 detailList: {},
@@ -73,17 +78,23 @@
         },
         methods: {
             getModuleDetail: function(item){
+                var lists = [];
                 this.isShowDetail = !this.isShowDetail;
                 this.detailTitle = "";
                 this.detailList = {};
                 this.curColor = item.bgColor;
 
-                setTimeout(function(){
-                    if(this.isShowDetail){
-                        this.detailTitle = item;
-                        this.detailList = Config.detailList;
-                    }
-                }.bind(this), 300);
+                if(this.isShowDetail){
+                    this.$http.get("/types/" + item.id + ".node").then(function(res){
+                        lists = res.data;
+                        setTimeout(function(){
+                            if(this.isShowDetail){
+                                this.detailTitle = item;
+                                this.detailList = lists;
+                            }
+                        }.bind(this), 300);
+                    }.bind(this))
+                }
             }
         }
     }
@@ -153,22 +164,22 @@
                 display: inline-block
                 width: 50%
                 height: 50%
-                font: bold 2rem/12rem "Microsoft YaHei"
                 text-align: center
                 color: #fff
-                transition: font .5s, color .5s, transform 1s
+                font: bold 2rem/12rem "Microsoft YaHei"
+                @include transition((fontSize .5s))
                 &:hover
                     cursor: pointer
 
         .fun.small-modules
             height: 50px
             width: 50px
-            font-size: 0
             display: inline-block
             float: left
             @include transform(360deg)
 
             a
+                font-size: 0
                 color: rgba(255, 255, 255, 0)
                 font: bold 0rem/0rem "Microsoft YaHei"
 
