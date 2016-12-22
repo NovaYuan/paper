@@ -44,3 +44,6 @@ app.get('/types.node', function(req, res) {
 app.get('/types/:id.node', function(req, res){
     connect.connectQuery(connect.getTypesQuery(req.params), req, res);
 });
+app.get('/:service/:id.node', function(req, res){
+    connect.connectQuery(connect.getArticleDetail(req.params), req, res);
+});

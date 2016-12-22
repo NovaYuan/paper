@@ -16,7 +16,8 @@
             </span>
         </header>
         <div class="modules">
-            <div class="fun" :class="{'small-modules': isShowDetail}">
+            <div class="fun"
+                 :class="{'small-modules': isShowDetail}">
                 <a v-for="item in modules"
                    :style="{backgroundColor: item.bgColor}"
                    v-on:click="getModuleDetail(item)">
@@ -28,9 +29,11 @@
 
             <div class="modules-detail" v-show="isShowDetail">
                 <ul>
-                   <li v-for="item in detailList.content">
-                       <a :href="'/' + item.id" :id="item.id">{{item.title}}</a>
-                       <span class="float-right">{{item.createDate}}</span>
+                   <li class="flex"
+                       v-for="item in detailList.content">
+                       <a :href="'#/' + modulesMap[item.type] + '/' + item.id"
+                          :id="item.id" class="flex-2">{{item.title}}</a>
+                       <span class="float-right flex-1">{{item.createDate | date}}</span>
                    </li>
                 </ul>
                 <div class="tag-wrapper">
@@ -59,26 +62,32 @@
 <script>
     export default {
         name: 'Sidebar',
-        created(){
-            this.$http.get('/types.node').then(function(res) {
-                this.modules = res.data;
-            }.bind(this))
-        },
         data(){
             return {
                 name: "test2",
                 isAuth: true,
                 profileUrl: false,
                 modules: [],
+                modulesMap: {},
                 isShowDetail: false,
                 detailTitle: "",
                 detailList: {},
                 curColor: ""
             }
         },
+        created(){
+            this.$http.get('/types.node').then(function(res) {
+                this.modules = res.data;
+
+                for(var i = 0; i < this.modules.length; i++){
+                    this.modulesMap[this.modules[i].id] = this.modules[i].enName
+                }
+            }.bind(this))
+        },
         methods: {
             getModuleDetail: function(item){
-                var lists = [];
+                var lists = [],
+                        tags = [];
                 this.isShowDetail = !this.isShowDetail;
                 this.detailTitle = "";
                 this.detailList = {};
@@ -87,12 +96,34 @@
                 if(this.isShowDetail){
                     this.$http.get("/types/" + item.id + ".node").then(function(res){
                         lists = res.data;
-                        setTimeout(function(){
-                            if(this.isShowDetail){
-                                this.detailTitle = item;
-                                this.detailList = lists;
+
+                        //循环出标签
+                        for(var i = 0; i < lists.length; i++){
+                            var tagsArr = lists[i].tags.split(",");
+
+                            for(var j = 0; j < tagsArr.length; j++){
+                                if(tags.indexOf(tagsArr[j]) < 0){
+                                    tags.push(tagsArr[j])
+                                }
                             }
+                        }
+
+                        if(tags.length > 5){
+                            tags = tags.splice(0, 4)
+                        }
+
+                        if(lists.length == 0){
+                            tags.push("此模块暂无数据")
+                        }
+
+                        setTimeout(function(){
+                            this.detailTitle = item;
+                            this.detailList = {
+                                content: lists,
+                                tags: tags
+                            };
                         }.bind(this), 300);
+
                     }.bind(this))
                 }
             }
@@ -200,8 +231,9 @@
                             text-decoration: underline
 
             .tag-wrapper
-                margin: 80px 0 0
+                margin: 20px 0 0
                 border-top: 1px solid #cce0e1
+                text-align: center
                 .label
                     display: inline-block
                     padding: 12px 6px

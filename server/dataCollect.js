@@ -79,6 +79,10 @@ var Connect = function(){
 
         return query
     };
+
+    this.getArticleDetail = function(params){
+        return 'select * from articles where id = ' + params.id
+    }
 };
 
 module.exports = new Connect();

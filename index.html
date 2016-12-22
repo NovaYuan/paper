@@ -8,7 +8,10 @@
 </head>
 <body>
 <div class="flex" id="app">
-    <Stage></Stage>
+    <!--<Stage></Stage>-->
+    <transition name="fade">
+        <router-view></router-view>
+    </transition>
     <Sidebar></Sidebar>
 </div>
 <script src="src/config.js"></script>

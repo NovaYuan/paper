@@ -1,29 +1,51 @@
 <!--created by Choojen on 2016/12/14.-->
 <template lang="html">
     <div class="flex-3 content-container">
-        <div class="loading-container">
+        <div class="loading-container" v-if="isLoading">
             <canvas id="loading"></canvas>
             <canvas id="loading-bar" v-on:hover="drawHeart($event)"></canvas>
         </div>
-        <div class="book-wrapper-left float-left"></div>
+        <div class="book-wrapper-left float-left">
+            <div class="article-detail">
+                <h3 class="h3">{{detail.title}}</h3>
+                <p class="create-info flex">
+                    <small class="creator flex-1">作者: {{detail.creator}}</small>
+                    <small class="creator flex-1">创建时间: {{detail.createDate | date}}</small>
+                </p>
+                <div class="abstract">{{detail.abstract}}</div>
+                <div class="content">
+                    {{detail.content}}
+                    <p class="text-center" v-if="emptyContent">{{emptyContent}}</p>
+                </div>
+            </div>
+        </div>
         <div class="book-wrapper-right float-left"></div>
     </div>
 </template>
 
 <script>
     export default {
+        data(){
+            return {
+                name: "bs",
+                heartbeatPath: [],
+                isLoading: true,
+                emptyContent: "",
+                detail: {}
+            }
+        },
+        created(){
+            this.fetchData()
+        },
         mounted(){
             this.strokeHeartbeatLine();
             this.strokeAurora();
         },
-        data(){
-            return {
-                name: "bs",
-                heartbeatPath: []
-            }
+        watch: {
+            '$route': 'fetchData'
         },
         methods: {
-            strokeHeartbeatLine: function(){
+            strokeHeartbeatLine(){
                 var canvas = document.getElementById('loading'),
                         ctx = canvas.getContext('2d'),
                         el = document.getElementsByClassName("content-container");
@@ -70,7 +92,7 @@
                 ctx.fillText("小服正在拿数据，请稍等...", last / 2, center - 105);
                 ctx.stroke();
             },
-            strokeAurora: function(){
+            strokeAurora(){
                 var canvas = document.getElementById('loading-bar'),
                         ctx = canvas.getContext('2d'),
                         paths = this.heartbeatPath,
@@ -104,8 +126,20 @@
                     count++;
                 }, 30);
             },
-            drawHeart: function(e){
+            drawHeart(e){
                 console.log(e)
+            },
+            fetchData(){
+                var params = this.$route.params;
+
+                this.$http.get('/'+ params.service +'/'+ params.id +'.node').then(function(res){
+                    this.isLoading = false;
+                    this.detail = res.data[0];
+
+                    if(!this.detail.content){
+                        this.emptyContent = "作者去偷懒了..."
+                    }
+                })
             }
         }
     }
@@ -148,7 +182,7 @@
         box-shadow: inset 0 -1px 2px rgba(50, 50, 50, 0.1), inset -1px 0 1px rgba(150, 150, 150, 0.2)
         border-radius: 0 5px 5px 0
         box-shadow: 0 7px 8px #ddd
-        @include transform(rotateY(-3deg))
+        position: relative
 
         &:after,
         &:before
@@ -157,6 +191,7 @@
             width: 100%
             height: 100%
             position: absolute
+            top: 0
             z-index: -6
             border-top-right-radius: 5px
             border-bottom-right-radius: 5px
@@ -171,5 +206,36 @@
         background: -ms-linear-gradient(left, #fff 0%, #f3f2f0 100%)
         background: linear-gradient(left, #fff 0%, #f3f2f0 100%)
         border-radius: 5px 0 0 5px
-        @include transform(rotateY(3deg))
+
+    .article-detail
+        padding: $smallGap $commonGap
+
+        h3
+            height: 50px
+            line-height: 50px
+            text-align: center
+            font-size: 1.6rem
+            color: #666
+
+        .create-info
+            margin: 0
+            color: gray
+            padding: $smallGap 0
+            border-bottom: 1px dotted #eee
+            text-align: center
+
+        .abstract,
+        .content
+            line-height: 24px
+            color: darkorange
+            text-indent: 2em
+            padding: $smallGap 0 0
+
+        .abstract
+            text-align: right
+
+        .content
+            font-size: 1.4rem
+            color: gray
+
 </style>
