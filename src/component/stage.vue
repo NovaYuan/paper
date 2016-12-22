@@ -138,6 +138,8 @@
 
                     if(!this.detail.content){
                         this.emptyContent = "作者去偷懒了..."
+                    }else{
+                        this.emptyContent = ""
                     }
                 })
             }
