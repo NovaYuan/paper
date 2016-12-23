@@ -76,16 +76,10 @@
             }
         },
         created(){
-            this.$http.get('/types.node').then(function(res) {
-                this.modules = res.data;
-
-                for(var i = 0; i < this.modules.length; i++){
-                    this.modulesMap[this.modules[i].id] = this.modules[i].enName
-                }
-            }.bind(this))
+            this.getTypes()
         },
         methods: {
-            getModuleDetail: function(item){
+            getModuleDetail(item){
                 var lists = [],
                         tags = [];
                 this.isShowDetail = !this.isShowDetail;
@@ -126,6 +120,15 @@
 
                     }.bind(this))
                 }
+            },
+            getTypes(){
+                this.$http.get('/types.node').then(function(res) {
+                    this.modules = res.data;
+
+                    for(var i = 0; i < this.modules.length; i++){
+                        this.modulesMap[this.modules[i].id] = this.modules[i].enName
+                    }
+                }.bind(this))
             }
         }
     }

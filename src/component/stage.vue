@@ -1,12 +1,12 @@
 <!--created by Choojen on 2016/12/14.-->
 <template lang="html">
     <div class="flex-3 content-container">
-        <div class="loading-container" v-if="isLoading">
+        <div class="loading-container" v-show="isLoading">
             <canvas id="loading"></canvas>
             <canvas id="loading-bar" v-on:hover="drawHeart($event)"></canvas>
         </div>
         <div class="book-wrapper-left float-left">
-            <div class="article-detail">
+            <div class="article-detail" v-if="!isLoading">
                 <h3 class="h3">{{detail.title}}</h3>
                 <p class="create-info flex">
                     <small class="creator flex-1">作者: {{detail.creator}}</small>
@@ -29,6 +29,7 @@
             return {
                 name: "bs",
                 heartbeatPath: [],
+                isFirstLoading: true,
                 isLoading: true,
                 emptyContent: "",
                 detail: {}
@@ -130,18 +131,23 @@
                 console.log(e)
             },
             fetchData(){
+                this.isLoading = true;
                 var params = this.$route.params;
 
-                this.$http.get('/'+ params.service +'/'+ params.id +'.node').then(function(res){
-                    this.isLoading = false;
-                    this.detail = res.data[0];
+                if(params.id){
+                    this.$http.get('/'+ params.service +'/'+ params.id +'.node').then(function(res){
+                        this.isLoading = false;
+                        this.detail = res.data[0];
 
-                    if(!this.detail.content){
-                        this.emptyContent = "作者去偷懒了..."
-                    }else{
-                        this.emptyContent = ""
-                    }
-                })
+                        if(!this.detail.content){
+                            this.emptyContent = "作者去偷懒了..."
+                        }else{
+                            this.emptyContent = ""
+                        }
+                    }, function(res){
+                        this.isLoading = true;
+                    })
+                }
             }
         }
     }

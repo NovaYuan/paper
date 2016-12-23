@@ -23,6 +23,11 @@ var connect = require('./server/dataCollect');
     }));
 })();
 
+app.use(function (err, req, res, next) {
+    console.log(err.stack);
+    res.render(500, err.stack);
+});
+
 //读取静态资源
 app.use('/static', express.static(__dirname + '/static'));
 app.use(express.static(__dirname));
@@ -36,14 +41,13 @@ app.listen(port, function(error) {
     }
 });
 
-
 //获取数据
-app.get('/types.node', function(req, res) {
-    connect.connectQuery(connect.getTypesQuery(), req, res)
+app.get('/types.node', function(req, res, next) {
+    connect.connectQuery(connect.getTypesQuery(), req, res, next)
 });
-app.get('/types/:id.node', function(req, res){
-    connect.connectQuery(connect.getTypesQuery(req.params), req, res);
+app.get('/types/:id.node', function(req, res, next){
+    connect.connectQuery(connect.getTypesQuery(req.params), req, res, next);
 });
-app.get('/:service/:id.node', function(req, res){
-    connect.connectQuery(connect.getArticleDetail(req.params), req, res);
+app.get('/:service/:id.node', function(req, res, next){
+    connect.connectQuery(connect.getArticleDetail(req.params), req, res, next);
 });

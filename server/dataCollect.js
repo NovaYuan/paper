@@ -22,11 +22,16 @@ var Connect = function(){
         console.log('connected as id ' + connect.threadId);
     });
 
-    this.connectQuery = function(queryString, req, res, callback){
+    this.connectQuery = function(queryString, req, res, next, callback){
         return connect.query(queryString, function(err, results, fields){
             if(err){
-                res.status(404).end(err);
-                throw err;
+                res.setHeader('Cache-Control', 'no-cache');
+                res.writeHead(500, {'Content-Type': 'application/json;charset=utf-8'});
+                res.end(JSON.stringify({
+                    message: "参数错误"
+                }));
+
+                return next(err);
             }
 
             if(results){
@@ -71,17 +76,20 @@ var Connect = function(){
     };
 
     this.getTypesQuery = function(param){
-        var query = 'select * from articletypes';
+        var query = "select * from articletypes";
 
         if(param){
-            query = 'select * from articles where type = ' + param.id
+            query = "select * from articles where type = " + param.id
         }
 
         return query
     };
 
     this.getArticleDetail = function(params){
-        return 'select * from articles where id = ' + params.id
+        if(!params.id){
+            return false;
+        }
+        return "select * from articles where id = " + params.id
     }
 };
 
