@@ -41,7 +41,7 @@ Vue.filter("date", function(value, format){
 var router = new VueRouter({
     routes: [
         { path: '/:service/:id', component: Stage },
-        { path: '/', component: Stage}
+        { path: '*', component: Stage}
     ]
 });
 

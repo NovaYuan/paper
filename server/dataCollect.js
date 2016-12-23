@@ -23,7 +23,7 @@ var Connect = function(){
     });
 
     this.connectQuery = function(queryString, req, res, next, callback){
-        return connect.query(queryString, function(err, results, fields){
+        return connect.query(mysql.format(queryString), function(err, results, fields){
             if(err){
                 res.setHeader('Cache-Control', 'no-cache');
                 res.writeHead(500, {'Content-Type': 'application/json;charset=utf-8'});
@@ -53,7 +53,7 @@ var Connect = function(){
             console.log("服务器接收到的数据：　"+ saved);
         });
         res.on("end", function(insertSql, insertParams){
-            connect.query(insertSql, insertParams, function(err, result){
+            connect.query(mysql.format(insertSql), insertParams, function(err, result){
                 if(err){
                     console.log('创建失败 - ',err.message);
                     return;
@@ -79,7 +79,7 @@ var Connect = function(){
         var query = "select * from articletypes";
 
         if(param){
-            query = "select * from articles where type = " + param.id
+            query = "select * from articles where type = " + connect.escape(param.id)
         }
 
         return query
@@ -89,7 +89,7 @@ var Connect = function(){
         if(!params.id){
             return false;
         }
-        return "select * from articles where id = " + params.id
+        return "select * from articles where id = " + connect.escape(params.id)
     }
 };
 

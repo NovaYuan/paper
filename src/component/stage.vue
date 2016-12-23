@@ -19,7 +19,17 @@
                 </div>
             </div>
         </div>
-        <div class="book-wrapper-right float-left"></div>
+        <div class="book-wrapper-right float-left">
+            <div class="comment">
+                <p>欢迎吐槽：</p>
+                <form class="write-comment">
+                    <textarea rows="5" v-model="comment"></textarea>
+                    <div class="comment-btn-group clearfix">
+                        <button class="btn btn-submit float-right" type="button">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -245,5 +255,28 @@
         .content
             font-size: 1.4rem
             color: gray
+
+    .comment
+        padding: $commonGap $bigGap
+
+        .write-comment
+            textarea
+                width: 100%
+                outline: none
+                border: 1px solid #ecebea
+                padding: 8px
+                box-sizing: border-box
+                border-radius: 5px
+
+            .comment-btn-group
+                margin-top: $smallGap
+                .btn-submit
+                    padding: 5px $commonGap
+                    background: yellowgreen
+                    color: white
+                    border-radius: 3px
+                    outline: none
+                    border: none
+
 
 </style>
